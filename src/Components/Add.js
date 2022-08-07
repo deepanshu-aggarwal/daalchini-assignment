@@ -1,20 +1,38 @@
 import React, { useEffect, useState } from "react";
 import { useStateValue } from "./Context/StateProvider";
+import { makeStyles } from "@material-ui/core";
 
-const Add = ({ open, classes, setOpen, item }) => {
+const useStyles = makeStyles(() => ({
+  add: {
+    backgroundColor: "#1CAC78",
+    padding: "3px 20px",
+    borderRadius: "4px",
+    color: "white",
+    cursor: "pointer",
+  },
+  qty: {
+    display: "grid",
+    border: "2px solid #1CAC78",
+    gridTemplateColumns: "1fr 1fr 1fr",
+    width: "70px",
+    padding: "2px 0px",
+    justifyItems: "center",
+  },
+}));
+
+const Add = ({ item }) => {
   const [qty, setQty] = useState(item.qty);
-  const data = JSON.parse(localStorage.getItem("data"));
   const [state, setState] = useStateValue();
+  const classes = useStyles();
+
   useEffect(() => {
-    item.qty = qty;
-    const newData = data.map((curr) => {
+    const newData = state.map((curr) => {
       if (curr.id === item.id) {
         curr.qty = qty;
       }
       return curr;
     });
     setState(newData);
-    localStorage.setItem("data", JSON.stringify(newData));
   }, [qty]);
 
   return (
