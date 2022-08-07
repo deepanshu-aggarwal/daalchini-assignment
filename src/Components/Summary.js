@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core";
 import { useStateValue } from "./Context/StateProvider";
 import { useNavigate } from "react-router-dom";
+import { AiOutlineArrowRight } from "react-icons/ai";
 import ProductList from "./ProductList";
 
 const useStyles = makeStyles(() => ({
@@ -17,7 +18,11 @@ const useStyles = makeStyles(() => ({
   },
   continue: {
     color: "white",
-    cursor: "pointer",
+    fontSize: "20px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "8%",
   },
   container: {
     backgroundColor: "#008000",
@@ -36,7 +41,8 @@ const Summary = () => {
   const classes = useStyles();
   const [cart, setCart] = useState([]);
   const [price, setPrice] = useState(0);
-  const [state, isLogin] = useStateValue();
+  const [state] = useStateValue();
+  const [isLogin, setIsLogin] = useState(localStorage.getItem("isLogin"));
 
   useEffect(() => {
     const newCart = state.filter((item) => {
@@ -51,32 +57,34 @@ const Summary = () => {
   }, [state]);
 
   const proceedCheckout = () => {
-    if (isLogin !== "") {
+    if (isLogin) {
       navigate("/checkout");
     } else {
       navigate("/login");
     }
   };
 
+  useEffect(() => {
+    setIsLogin(localStorage.getItem("isLogin"));
+  }, []);
+
   return (
-    <>
+    <div>
       <ProductList />
       <div className={classes.main}>
         <div className={classes.container}>
           <div>{cart.length} item(s)</div>
-          <div>
-            {/* {
-              !open ? <div></div>
-              
-            } */}
-          </div>
           <div>Total Rs. {price}</div>
         </div>
-        <div className={classes.continue} onClick={() => proceedCheckout()}>
-          Continue
+        <div className={classes.continue}>
+          <div>{isLogin ? "Continue" : "Login"}</div>
+          <AiOutlineArrowRight
+            style={{ cursor: "pointer" }}
+            onClick={() => proceedCheckout()}
+          />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

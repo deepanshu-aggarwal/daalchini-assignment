@@ -4,12 +4,9 @@ import { useStateValue } from "./Context/StateProvider";
 import Add from "./Add";
 
 const useStyles = makeStyles(() => ({
-  main: {
-    // margin: "30px",
-  },
+  main: {},
   table: {
-    width: "100vw",
-    margin: "30px",
+    width: "100%",
   },
   product: {
     display: "grid",
@@ -52,7 +49,7 @@ const Table = () => {
           <div className={classes.product}>
             <p>{item.title}</p>
             <Add item={item} />
-            <p>{item.price * item.qty}</p>
+            <p>Rs. {item.price * item.qty}</p>
           </div>
         ))}
         <div className="line"></div>
