@@ -7,6 +7,8 @@ const useStyles = makeStyles(() => ({
   main: {},
   table: {
     width: "100%",
+    // margin: "30px",
+    color: "#000",
   },
   product: {
     display: "grid",
