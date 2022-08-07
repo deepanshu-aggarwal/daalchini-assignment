@@ -5,10 +5,9 @@ export const StateContext = createContext();
 
 export const StateProvider = ({ children }) => {
   const [state, setState] = useState(data);
-  const [isLogin, setIsLogin] = useState("");
-  localStorage.setItem("data", JSON.stringify(data));
+  // localStorage.setItem("isLogin", false);
   return (
-    <StateContext.Provider value={[state, setState, isLogin, setIsLogin]}>
+    <StateContext.Provider value={[state, setState]}>
       {children}
     </StateContext.Provider>
   );

@@ -9,6 +9,7 @@ const useStyles = makeStyles(() => ({
     borderRadius: "4px",
     color: "white",
     cursor: "pointer",
+    maxWidth: "fit-content",
   },
   qty: {
     display: "grid",

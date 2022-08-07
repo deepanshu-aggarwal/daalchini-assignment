@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { makeStyles } from "@material-ui/core";
-import { useStateValue } from "./Context/StateProvider";
+import ProductList from "./ProductList";
 
 const useStyles = makeStyles(() => ({
   main: {
@@ -41,17 +41,16 @@ const useStyles = makeStyles(() => ({
 }));
 
 const Login = () => {
-  const [login, setLogin] = useState(true);
   const classes = useStyles();
+  const [login, setLogin] = useState(true);
   const [mobile, setMobile] = useState("");
   const [otp, setOtp] = useState("");
   const [error, setError] = useState("");
-  const [isLogin, setIsLogin] = useStateValue();
   const navigate = useNavigate();
 
   const verifyOtp = () => {
     if (otp === "888888") {
-      setIsLogin(login);
+      localStorage.setItem("isLogin", true);
       navigate("/checkout");
     } else {
       setError("Invalid Otp");
@@ -59,38 +58,41 @@ const Login = () => {
   };
 
   return (
-    <div className={classes.main}>
-      {login === true ? (
-        <div className={classes.body}>
-          <div className={classes.heading}>Login</div>
-          <input
-            className={classes.input}
-            type="text"
-            placeholder="Enter you phone number"
-            value={mobile}
-            onChange={(e) => setMobile(e.target.value)}
-          />
-          <button className={classes.button} onClick={() => setLogin(false)}>
-            SUBMIT
-          </button>
-        </div>
-      ) : (
-        <div className={classes.body}>
-          <div className={classes.heading}>OTP</div>
-          <input
-            className={classes.input}
-            type="text"
-            placeholder="Enter the OTP"
-            value={otp}
-            onChange={(e) => setOtp(e.target.value)}
-          />
-          <button onClick={() => verifyOtp()} className={classes.button}>
-            VERIFY
-          </button>
-          {error}
-        </div>
-      )}
-    </div>
+    <>
+      <ProductList />
+      <div className={classes.main}>
+        {login === true ? (
+          <div className={classes.body}>
+            <div className={classes.heading}>Login</div>
+            <input
+              className={classes.input}
+              type="text"
+              placeholder="Enter you phone number"
+              value={mobile}
+              onChange={(e) => setMobile(e.target.value)}
+            />
+            <button className={classes.button} onClick={() => setLogin(false)}>
+              SUBMIT
+            </button>
+          </div>
+        ) : (
+          <div className={classes.body}>
+            <div className={classes.heading}>OTP</div>
+            <input
+              className={classes.input}
+              type="text"
+              placeholder="Enter the OTP"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+            />
+            <button onClick={() => verifyOtp()} className={classes.button}>
+              VERIFY
+            </button>
+            {error}
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 
